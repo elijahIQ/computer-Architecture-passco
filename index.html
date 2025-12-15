@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-adsense-account" content="ca-pub-9286491122603741">
+<title>Database Try-Out Questions</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        margin: 0;
+    }
+    header {
+        background: #003366;
+        padding: 15px;
+        color: white;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    #timer {
+        background: #222;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        font-size: 20px;
+    }
+    .container {
+        width: 95%;
+        max-width: 900px;
+        margin: 20px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #ccc;
+    }
+    .question-box {
+        padding: 15px;
+        background: #eef3fa;
+        border-left: 5px solid #003366;
+        border-radius: 6px;
+        margin-bottom: 20px;
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+    button {
+        padding: 12px 20px;
+        background: #003366;
+        color: white;
+        border: none;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #0055aa;
+    }
+    #submitBtn {
+        width: 100%;
+        margin-top: 25px;
+        background: #008800;
+    }
+    #result {
+        display: none;
+        padding: 20px;
+        background: #d8ffd8;
+        border-left: 5px solid #009933;
+        border-radius: 8px;
+        margin-top: 20px;
+        font-size: 20px;
+    }
+    .correct-answer {
+        color: green;
+        font-weight: bold;
+    }
+    .incorrect-answer {
+        color: red;
+        font-weight: bold;
+    }
+</style>
+</head>
+
+<body>
+
+<header>Computer Architecture Try-Out Questions</header>
+<div id="timer">Time Left: <span id="time">60:00</span></div>
+
+<div class="container">
+
+    <div id="questionContainer"></div>
+
+    <div class="nav-buttons">
+        <button onclick="prevQuestion()">Previous</button>
+        <button onclick="nextQuestion()">Next</button>
+    </div>
+
+    <button id="submitBtn" onclick="submitQuiz()">Submit Answers</button>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+//new
+
+let questions = [
+  {
+    q: "What is computer architecture?",
+    o: [
+      "The study of computer software",
+      "The design and structure of a computer system",
+      "The development of computer hardware",
+      "The testing of computer systems"
+    ],
+    a: 1
+  },
+  {
+    q: "What is the main goal of computer architecture?",
+    o: [
+      "To design computers that are fast and efficient",
+      "To design computers that are easy to use",
+      "To design computers that are inexpensive",
+      "To design computers that meet the needs of a particular market and applications"
+    ],
+    a: 3
+  },
+  {
+    q: "What are the four essential functional units of computers?",
+    o: [
+      "Input, Output, Processing, Memory",
+      "Input, Output, Processing, Storage",
+      "Input, Output, CPU, Memory",
+      "Input, Output, Processing, Control"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the input unit?",
+    o: [
+      "To process data",
+      "To store data",
+      "To communicate results to the user",
+      "To allow users to enter data and program instructions"
+    ],
+    a: 3
+  },
+  {
+    q: "What is the purpose of the output unit?",
+    o: [
+      "To process data",
+      "To store data",
+      "To communicate results to the user",
+      "To allow users to enter data and program instructions"
+    ],
+    a: 2
+  },
+  {
+    q: "What are the two parts of the processing unit?",
+    o: ["ALU and CU", "CPU and Memory", "Input and Output", "Storage and Processing"],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the Arithmetic Logic Unit (ALU)?",
+    o: [
+      "To perform arithmetic and logic operations",
+      "To control the flow of data",
+      "To store data",
+      "To communicate results to the user"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the Control Unit (CU)?",
+    o: [
+      "To perform arithmetic and logic operations",
+      "To control the flow of data",
+      "To store data",
+      "To communicate results to the user"
+    ],
+    a: 1
+  },
+  {
+    q: "What is the purpose of the memory unit?",
+    o: [
+      "To process data",
+      "To store data and program instructions",
+      "To communicate results to the user",
+      "To allow users to enter data and program instructions"
+    ],
+    a: 1
+  },
+  {
+    q: "What is the difference between primary and secondary memory?",
+    o: [
+      "Primary memory is faster and more expensive than secondary memory",
+      "Primary memory is slower and less expensive than secondary memory",
+      "Primary memory is used for storing data and program instructions, while secondary memory is used for storing results",
+      "Primary memory is used for storing results, while secondary memory is used for storing data and program instructions"
+    ],
+    a: 0
+  },
+  {
+    q: "What is computer organization?",
+    o: [
+      "The design and structure of a computer system",
+      "The study of computer software",
+      "The development of computer hardware",
+      "The operational units and their interconnections that implement the architecture specification"
+    ],
+    a: 3
+  },
+  {
+    q: "What is the instruction set architecture (ISA)?",
+    o: [
+      "A set of instructions that a computer can execute",
+      "A set of instructions that a computer cannot execute",
+      "A set of instructions that are used to design a computer",
+      "A set of instructions that are used to test a computer"
+    ],
+    a: 0
+  },
+  {
+    q: "What is pipelining?",
+    o: [
+      "A technique used to improve the performance of a computer",
+      "A technique used to reduce the power consumption of a computer",
+      "A technique used to increase the storage capacity of a computer",
+      "A technique used to improve the security of a computer"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the bus structure?",
+    o: [
+      "To connect the CPU, memory, and I/O devices",
+      "To connect the CPU and memory",
+      "To connect the CPU and I/O devices",
+      "To connect the memory and I/O devices"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the address bus?",
+    o: [
+      "A bus that carries addresses from the CPU to memory",
+      "A bus that carries data from the CPU to memory",
+      "A bus that carries control signals from the CPU to memory",
+      "A bus that carries data from memory to the CPU"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the data bus?",
+    o: [
+      "A bus that carries addresses from the CPU to memory",
+      "A bus that carries data from the CPU to memory",
+      "A bus that carries control signals from the CPU to memory",
+      "A bus that carries data from memory to the CPU"
+    ],
+    a: 1
+  },
+  {
+    q: "What is the control bus?",
+    o: [
+      "A bus that carries addresses from the CPU to memory",
+      "A bus that carries data from the CPU to memory",
+      "A bus that carries control signals from the CPU to memory",
+      "A bus that carries data from memory to the CPU"
+    ],
+    a: 2
+  },
+  {
+    q: "What is the purpose of the control unit?",
+    o: [
+      "To control the flow of data",
+      "To perform arithmetic and logic operations",
+      "To store data",
+      "To communicate results to the user"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the ALU?",
+    o: [
+      "To perform arithmetic and logic operations",
+      "To control the flow of data",
+      "To store data",
+      "To communicate results to the user"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the registers?",
+    o: ["To store data", "To perform arithmetic and logic operations", "To control data flow", "To communicate results"],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the cache memory?",
+    o: [
+      "To store frequently used data",
+      "To store infrequently used data",
+      "To store data being processed",
+      "To store data not being processed"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of virtual memory?",
+    o: [
+      "To increase the storage capacity of the computer",
+      "To improve the performance of the computer",
+      "To provide a larger address space than physical memory",
+      "To reduce the cost of the computer"
+    ],
+    a: 2
+  },
+  {
+    q: "What is the purpose of the input/output (I/O) devices?",
+    o: [
+      "To communicate with the user",
+      "To store data",
+      "To process data",
+      "To control the flow of data"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the address bus?",
+    o: [
+      "To carry addresses from the CPU to memory",
+      "To carry data from the CPU to memory",
+      "To carry control signals from the CPU to memory",
+      "To carry data from memory to the CPU"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the data bus?",
+    o: [
+      "To carry data from the CPU to memory",
+      "To carry addresses from the CPU to memory",
+      "To carry control signals from the CPU to memory",
+      "To carry data from memory to the CPU"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the control bus?",
+    o: [
+      "To carry control signals from the CPU to memory",
+      "To carry addresses from the CPU to memory",
+      "To carry data from the CPU to memory",
+      "To carry data from memory to the CPU"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the registers?",
+    o: [
+      "To store data",
+      "To perform arithmetic and logic operations",
+      "To control the flow of data",
+      "To communicate results to the user"
+    ],
+    a: 0
+  },
+
+  /* --- SECOND SET (Instruction-related questions) --- */
+
+  {
+    q: "What is the purpose of the MOV instruction?",
+    o: [
+      "To add two numbers together",
+      "To copy data from one location to another",
+      "To compare two numbers",
+      "To jump to a designated address"
+    ],
+    a: 1
+  },
+  {
+    q: "What is the purpose of the ADD instruction?",
+    o: [
+      "To add two numbers together",
+      "To subtract two numbers",
+      "To multiply two numbers",
+      "To divide two numbers"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the COMPARE instruction?",
+    o: [
+      "To compare two numbers",
+      "To add two numbers together",
+      "To subtract two numbers",
+      "To jump to a designated address"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the IN instruction?",
+    o: [
+      "To input information from a device",
+      "To output information to a device",
+      "To load information from memory",
+      "To store information in memory"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the JUMP instruction?",
+    o: [
+      "To jump to a designated address",
+      "To compare two numbers",
+      "To add two numbers together",
+      "To load information from memory"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the LOAD instruction?",
+    o: [
+      "To load information from memory",
+      "To store information in memory",
+      "To input information from a device",
+      "To output information to a device"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the OUT instruction?",
+    o: [
+      "To output information to a device",
+      "To input information from a device",
+      "To load information from memory",
+      "To store information in memory"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the STORE instruction?",
+    o: [
+      "To store information in memory",
+      "To load information from memory",
+      "To input information from a device",
+      "To output information to a device"
+    ],
+    a: 0
+  },
+  {
+    q: "What is a transistor?",
+    o: [
+      "A device that amplifies electrical signals",
+      "A device that switches electrical signals on and off",
+      "A device that stores electrical energy",
+      "A device that converts electrical energy to mechanical energy"
+    ],
+    a: 1
+  },
+  {
+    q: "What is the purpose of the clock signal in a microprocessor?",
+    o: [
+      "To synchronize the execution of instructions",
+      "To control the flow of data",
+      "To store data in memory",
+      "To input data from a device"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the program counter?",
+    o: [
+      "To keep track of the current instruction being executed",
+      "To store data in memory",
+      "To input data from a device",
+      "To output data to a device"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the instruction decoder?",
+    o: [
+      "To decode instructions and generate control signals",
+      "To execute instructions",
+      "To store data in memory",
+      "To input data from a device"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the fetch-execute cycle?",
+    o: [
+      "The process of fetching instructions from memory and executing them",
+      "The process of storing data in memory",
+      "The process of inputting data from a device",
+      "The process of outputting data to a device"
+    ],
+    a: 0
+  },
+  {
+    q: "What is branching?",
+    o: [
+      "The process of jumping to a designated address",
+      "The process of comparing two numbers",
+      "The process of adding two numbers together",
+      "The process of loading information from memory"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the difference between computer architecture and computer organization?",
+    o: [
+      "Computer architecture refers to the design of the computer system, while computer organization refers to the implementation of the design",
+      "Computer architecture refers to the implementation of the design, while computer organization refers to the design of the computer system",
+      "Computer architecture refers to the hardware components of the system, while computer organization refers to software",
+      "Computer architecture refers to software, while computer organization refers to hardware"
+    ],
+    a: 0
+  },
+  {
+    q: "What is Von-Neumann Architecture?",
+    o: [
+      "A type of architecture that uses a single bus for data and instructions",
+      "A type that uses separate buses for data and instructions",
+      "A type that uses a single memory for data and instructions",
+      "A type that uses separate memories for data and instructions"
+    ],
+    a: 0
+  },
+  {
+    q: "What is Harvard Architecture?",
+    o: [
+      "A type of architecture that uses separate buses for data and instructions",
+      "A type that uses a single bus for data and instructions",
+      "A type that uses separate memories for data and instructions",
+      "A type that uses a single memory for data and instructions"
+    ],
+    a: 0
+  },
+  {
+    q: "What is Instruction Set Architecture (ISA)?",
+    o: [
+      "A set of instructions a computer can execute",
+      "A set of instructions a computer cannot execute",
+      "A set of instructions used to design a computer",
+      "A set of instructions used to test a computer"
+    ],
+    a: 0
+  },
+  {
+    q: "What is Micro-architecture?",
+    o: [
+      "The implementation of the instruction set architecture",
+      "The design of the computer system",
+      "The hardware components of the computer system",
+      "The software components of the computer system"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the Arithmetic Logic Unit (ALU)?",
+    o: [
+      "To perform arithmetic and logical operations",
+      "To store data in memory",
+      "To input data from a device",
+      "To output data to a device"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the register file?",
+    o: [
+      "To store data temporarily",
+      "To perform arithmetic operations",
+      "To input data",
+      "To output data"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the memory unit?",
+    o: [
+      "To store data and program instructions",
+      "To perform arithmetic and logic operations",
+      "To input data from a device",
+      "To output data to a device"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the input/output (I/O) devices?",
+    o: [
+      "To input data from a device",
+      "To output data to a device",
+      "To store data in memory",
+      "To perform arithmetic operations"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the bus structure?",
+    o: [
+      "To connect the CPU, memory, and I/O devices",
+      "To connect the CPU and memory",
+      "To connect the CPU and I/O devices",
+      "To connect memory and I/O devices"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the address bus?",
+    o: [
+      "To carry addresses from the CPU to memory",
+      "To carry data from the CPU to memory",
+      "To carry control signals from the CPU to memory",
+      "To carry data from memory to the CPU"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the data bus?",
+    o: [
+      "To carry data from the CPU to memory",
+      "To carry addresses from the CPU to memory",
+      "To carry control signals from the CPU",
+      "To carry data from memory to the CPU"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the control bus?",
+    o: [
+      "To carry control signals from the CPU to memory",
+      "To carry addresses from the CPU to memory",
+      "To carry data from the CPU to memory",
+      "To carry data from memory to the CPU"
+    ],
+    a: 0
+  },
+  {
+    q: "What is the purpose of the clock signal?",
+    o: [
+      "To synchronize the execution of instructions",
+      "To control the flow of data",
+      "To store data in memory",
+      "To input data from a device"
+    ],
+    a: 0
+  }
+
+
+  /* ----------- CONTINUES ---------- */
+];
+
+
+//end
+
+
+
+/* ─────────────────────────
+    RANDOMIZE QUESTIONS
+─────────────────────────── */
+questions = questions.sort(() => Math.random() - 0.5);
+
+let currentIndex = 0;
+
+
+/* ──────────── STORE USER ANSWERS ──────────── */
+let userAnswers = {};  
+// example: userAnswers[3] = 2  → Question 3, option index 2 selected
+
+/* ─────────── DISPLAY QUESTION (with stored answers) ─────────── */
+function showQuestion() {
+    let q = questions[currentIndex];
+    let container = document.getElementById("questionContainer");
+
+    container.innerHTML = `
+        <div class="question-box">
+            <p><b>${currentIndex + 1}. ${q.q}</b></p>
+            ${q.o.map((opt, i) => `
+                <label>
+                    <input type="radio" name="q${currentIndex}"
+                        value="${i}"
+                        ${userAnswers[currentIndex] === i ? "checked" : ""}>
+                    ${opt}
+                </label><br>
+            `).join("")}
+        </div>
+    `;
+
+    // Save answer automatically when clicking
+    document.querySelectorAll(`input[name="q${currentIndex}"]`).forEach(radio => {
+        radio.addEventListener("change", function() {
+            userAnswers[currentIndex] = parseInt(this.value);
+        });
+    });
+}
+
+/* ─────────── NEXT / PREVIOUS — Keeps Answers Saved ─────────── */
+function nextQuestion() {
+    if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        showQuestion();
+    }
+}
+function prevQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showQuestion();
+    }
+}
+
+/* ─────────── SUBMIT: Score Only Based on Answered Questions ─────────── */
+function submitQuiz() {
+    let score = 0;
+    let answeredQuestions = Object.keys(userAnswers).length;
+    let details = "";
+
+    for (let index in userAnswers) {
+        index = parseInt(index);
+        let q = questions[index];
+        let userAnswer = userAnswers[index];
+
+        if (userAnswer === q.a) score++;
+
+        details += `
+            <p>
+                <b>${index + 1}. ${q.q}</b><br>
+                <span class="${userAnswer === q.a ? 'correct-answer' : 'incorrect-answer'}">
+                    Your answer: ${q.o[userAnswer]}
+                </span><br>
+                <span class="correct-answer">Correct answer: ${q.o[q.a]}</span>
+            </p><hr>
+        `;
+    }
+
+    if (answeredQuestions === 0) {
+        details = "<p>You did not answer any question.</p>";
+    }
+
+    document.getElementById("result").style.display = "block";
+    document.getElementById("result").innerHTML = `
+        <h2>Answered: ${answeredQuestions} / ${questions.length}</h2>
+        <h2>Your Score: ${score}</h2><br>
+        ${details}
+    `;
+}
+
+/* ─────────── TIMER (unchanged) ─────────── */
+let timeLeft = 60 * 60;
+function countdown() {
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+
+    document.getElementById("time").innerHTML =
+        `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+
+    if (timeLeft <= 0) {
+        submitQuiz();
+        document.getElementById("timer").style.background = "red";
+        return;
+    }
+    timeLeft--;
+    setTimeout(countdown, 1000);
+}
+countdown();
+
+/* ─────────── SHOW FIRST QUESTION ─────────── */
+showQuestion();
+
+
+</script>
+
+</body>
+</html>
+
+
+
