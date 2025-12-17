@@ -651,10 +651,184 @@ let questions = [
       "To input data from a device"
     ],
     a: 0
+  },
+
+
+  /* ----------- CONTINUES ----------*/
+  
+  
+  
+  {
+    "q": "What is the instruction set architecture, or ISA?",
+    "o": [
+      "The structures inside the processor that execute instructions",
+      "How transistors are used to decode instructions for the processor",
+      "The definition of the instructions that programs for the architecture can use",
+      "The design of the processor's input/output interfaces"
+    ],
+    "a": 2
+  },
+  {
+    "q": "What does the Fetch stage of the Fetch-Execute cycle do?\n\nI. Obtain the next instruction in the program\nII. Perform the calculation specified\nIII. Store the result in a register\nIV. Decode the instruction\nV. Access data memory",
+    "o": [
+      "I, II, III",
+      "I, IV, V",
+      "I only",
+      "II, III, IV"
+    ],
+    "a": 2
+  },
+  {
+    "q": "What happens immediately after the Execute stage of the Fetch-Execute cycle?\n\nI. The processor stores a value to memory.\nII. The instruction is decoded.\nIII. The Fetch-Execute cycle repeats by fetching the next instruction.\nIV. A branch instruction is executed to find the next instruction.",
+    "o": [
+      "I, II",
+      "III only",
+      "I, IV",
+      "II, III"
+    ],
+    "a": 1
+  },
+  {
+    "q": "Microprocessors use digital electronics. Which of the following are features of digital electronics?\n\nI. Each wire represents a digit from 0 to 9.\nII. The voltage of the circuit is fixed.\nIII. Computer architects can ignore exact voltage levels.\nIV. Circuits represent binary numbers.",
+    "o": [
+      "I, II, III",
+      "III, IV",
+      "I, III, IV",
+      "II, IV"
+    ],
+    "a": 1
+  },
+  {
+    "q": "What determines the maximum clock speed of a circuit?",
+    "o": [
+      "The number of transistors in the circuit",
+      "The size of the largest register in the circuit",
+      "The critical path",
+      "The size of the largest memory in the circuit"
+    ],
+    "a": 2
+  },
+  {
+    "q": "What type of instruction allows the microprocessor to make decisions and repeat instructions?",
+    "o": [
+      "Arithmetic instruction",
+      "Branch instruction",
+      "Load instruction",
+      "Store instruction"
+    ],
+    "a": 1
+  },
+  {
+    "q": "From where do arithmetic instructions get their inputs?\n\nI. The register file\nII. Branch instructions\nIII. Some bits within the instruction\nIV. The \"Fetch\" stage in the processor",
+    "o": [
+      "I, II",
+      "I, III",
+      "II, III",
+      "III, IV"
+    ],
+    "a": 1
+  },
+  {
+    "q": "Which of these factors affect the time taken to execute a program?\n\nI. Average clock cycles per instruction\nII. Number of instructions in the program\nIII. Clock period",
+    "o": [
+      "I, II",
+      "I, III",
+      "II, III",
+      "I, II, III"
+    ],
+    "a": 3
+  },
+  {
+    "q": "At most, how much faster can a processor pipeline with 4 stages execute a program compared to an unpipelined processor?",
+    "o": [
+      "Four times faster",
+      "Four times slower",
+      "Twice as fast",
+      "Twice as slow"
+    ],
+    "a": 0
+  },
+  {
+    "q": "What component is placed between stages in a pipeline?",
+    "o": [
+      "Program counter",
+      "Register",
+      "ALU",
+      "Memory"
+    ],
+    "a": 1
+  },
+  {
+    "q": "Choose all scenarios in which the branch unit can update the program counter so that the processor can proceed with the next instruction:\n\nI. When a branch instruction has executed in the ALU\nII. When a non-branch instruction has written to data memory\nIII. When a non-branch instruction has been decoded\nIV. When a branch instruction has finished the Fetch stage\nV. When a non-branch instruction has executed in the ALU",
+    "o": [
+      "I, II, III",
+      "I, IV, V",
+      "I only",
+      "II, III, IV"
+    ],
+    "a": 2
+  },
+  {
+    "q": "Which of these is not a class of pipeline hazard?",
+    "o": [
+      "Control hazard",
+      "Data hazard",
+      "Execution hazard",
+      "Structural hazard"
+    ],
+    "a": 2
+  },
+  {
+    "q": "What is the name of the circuitry within a pipeline that is added to remove certain data hazards?",
+    "o": [
+      "Forwarding path",
+      "Pipeline register",
+      "Hazard detection unit",
+      "Branch prediction unit"
+    ],
+    "a": 0
+  },
+  {
+    "q": "In a simple pipeline, why does the processor have to stall until an unconditional branch has executed?",
+    "o": [
+      "Decoding branches takes a long time",
+      "The processor needs to know the address of the next instruction to fetch",
+      "There is a data hazard from the branch to the next instruction",
+      "The branch instruction is complex"
+    ],
+    "a": 1
+  },
+  {
+    "q": "Which of the following does the branch target buffer —or BTB— contain?\n\nI. Branch target addresses\nII. Whether branches have been taken or not-taken\nIII. The instruction addresses of recently executed branches\nIV. The instruction addresses of all branches in the program",
+    "o": [
+      "I, II",
+      "I, III",
+      "II, III",
+      "III, IV"
+    ],
+    "a": 1
+  },
+  {
+    "q": "Which type of miss refers to those that happen when we have never seen the accessed address before?",
+    "o": [
+      "Compulsory miss",
+      "Capacity miss",
+      "Conflict miss"
+    ],
+    "a": 0
+  },
+  {
+    "q": "How do multicore processors help gain performance?",
+    "o": [
+      "Independent sets of instructions can be sent to separate cores, to enable them to be performed simultaneously",
+      "Multiple cores contain more resources, to help take advantage of instruction-level parallelism",
+      "The same resources are split over multiple cores, to reduce the overheads of pipelining"
+    ],
+    "a": 0
   }
 
 
-  /* ----------- CONTINUES ---------- */
+  
 ];
 
 
